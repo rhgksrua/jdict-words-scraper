@@ -1,17 +1,12 @@
-console.log('hello world');
-
-
+import WordList from './WordList';
+/*
 chrome.runtime.onMessage.addListener(
   function(message, sender, sendResponse) {
     console.log(message);
     // need to add message to localstorage and display on the browser page
   }
 );
+*/
 
-const click = document.getElementById("click");
-let a = 1;
-click.addEventListener('click', e => {
-  console.log('clicked me!');
-  a = 101293;
-
-})
+const parent = document.querySelector('.word-list');
+const wordList = new WordList(chrome, parent, document);

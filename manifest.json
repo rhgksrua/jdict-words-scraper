@@ -29,7 +29,7 @@
         "http://jpdic.naver.com/*"
       ],
       "js": [
-        "build/inject.bundle.js"
+        "src/inject/inject.bundle.js"
       ]
     }
   ]

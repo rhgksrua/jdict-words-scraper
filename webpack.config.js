@@ -1,12 +1,12 @@
 
 module.exports = {
   entry: {
-    inject: './src/inject/inject.js',
-    'foobar.spec': './src/foobar.spec.js'
+    'inject/inject': './src/inject/inject.js',
+    'browserAction/browserIndex': './src/browserAction/browserIndex.js',
   },
   output: {
     filename: '[name].bundle.js',
-    path: __dirname + '/build'
+    path: __dirname + '/src'
   },
   module: {
     rules: [

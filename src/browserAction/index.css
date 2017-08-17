@@ -1,0 +1,23 @@
+#mainPopup {
+  width: 700px;
+  font-size: 1em;
+}
+
+
+.word {
+}
+
+.furi {
+  display: inline-block;
+  width: 25%;
+}
+
+.kanji {
+  display: inline-block;
+  width: 25%;
+}
+
+.meaning {
+  display: inline-block;
+  width: 50%;
+}
