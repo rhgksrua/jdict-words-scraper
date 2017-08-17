@@ -14,18 +14,19 @@
     "page": "src/bg/background.html",
     "persistent": true
   },
-  "page_action": {
+  "browser_action": {
     "default_icon": "icons/icon19.png",
-    "default_title": "page action demo",
-    "default_popup": "src/page_action/page_action.html"
+    "default_title": "Naver Dictionary CSV",
+    "default_popup": "src/browserAction/index.html"
   },
   "permissions": [
-    "https://*/*"
+    "http://jpdic.naver.com/*",
+    "storage"
   ],
   "content_scripts": [
     {
       "matches": [
-        "https://*/*"
+        "http://jpdic.naver.com/*"
       ],
       "js": [
         "build/inject.bundle.js"

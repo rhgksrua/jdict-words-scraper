@@ -1,5 +1,8 @@
-console.log('webpack inject hello world');
+import Extractor from './Extractor';
 
+const extractor = new Extractor(chrome);
+
+/*
 chrome.extension.sendMessage({}, function(response) {
 	var readyStateCheckInterval = setInterval(function() {
 	if (document.readyState === "complete") {
@@ -13,3 +16,5 @@ chrome.extension.sendMessage({}, function(response) {
 	}
 	}, 10);
 });
+
+*/
