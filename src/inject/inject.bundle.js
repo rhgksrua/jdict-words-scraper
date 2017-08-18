@@ -78,23 +78,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var extractor = new _Extractor2.default(chrome);
 
-/*
-chrome.extension.sendMessage({}, function(response) {
-	var readyStateCheckInterval = setInterval(function() {
-	if (document.readyState === "complete") {
-		clearInterval(readyStateCheckInterval);
-
-		// ----------------------------------------------------------
-		// This part of the script triggers when page is done loading
-		console.log("Hello. This message was sent from scripts/inject.js");
-		// ----------------------------------------------------------
-
-	}
-	}, 10);
-});
-
-*/
-
 /***/ }),
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {

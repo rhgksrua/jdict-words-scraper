@@ -9,15 +9,20 @@
 
 .furi {
   display: inline-block;
-  width: 25%;
+  width: 100px;
 }
 
 .kanji {
   display: inline-block;
-  width: 25%;
+  width: 100px;
 }
 
 .meaning {
   display: inline-block;
-  width: 50%;
+  width: 480px;
+}
+
+.remove {
+  display: inline-block;
+  width: 20px;
 }
