@@ -115,9 +115,43 @@ fetchWordList.then(function (words) {
 }).then(function (arr) {
   wordList.setWordList(arr);
   display.render(wordList);
+  downloadListener();
 }).catch(function (error) {
   console.error(error);
 });
+
+function wordsToWords(words) {
+  var wordsArr = words.map(function (word) {
+    var furi = word.furi,
+        kanji = word.kanji,
+        meaning = word.meaning;
+
+    return new _Word2.default(furi, kanji, meaning);
+  });
+  return wordsArr;
+}
+
+function downloadListener() {
+  var download = document.querySelector('.download');
+  download.addEventListener('click', function () {
+    fetchWordList.then(function (words) {
+      return wordsToWords(words);
+    }).then(function (words) {
+      return words.reduce(function (a, b) {
+        //console.log(word.wordToString().split('\t'));
+        return a + b.wordToString();
+      }, '');
+    }).then(function (longString) {
+      var a = document.createElement('a');
+      var file = new Blob([longString], { type: 'text/plain' });
+      a.href = window.URL.createObjectURL(file);
+      a.download = 'toAnki';
+      a.click();
+    }).catch(function (error) {
+      console.log(error);
+    });
+  });
+}
 
 /***/ }),
 /* 3 */
@@ -300,7 +334,7 @@ var Word = function () {
   _createClass(Word, [{
     key: "wordToString",
     value: function wordToString() {
-      return this.furi + "  " + this.kanji + " " + this.meaning;
+      return this.kanji + "\t\t\t\t" + this.kanji + "\t" + this.furi + "\t" + this.kanji + "\t" + this.furi + "\t\t" + this.meaning + "\t\t\n";
     }
   }, {
     key: "toObject",
