@@ -59,4 +59,4 @@ typings/
 
 build/
 
-bundle.js
+*.bundle.js
