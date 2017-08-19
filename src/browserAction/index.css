@@ -3,26 +3,43 @@
   font-size: 1em;
 }
 
+section {
+  margin: 5px;
+}
+
+.word-list {
+
+}
 
 .word {
+  margin: 10px 0 10px 0;
+  border-bottom: 1px solid black;
 }
 
 .furi {
   display: inline-block;
-  width: 100px;
+  width: 20%;
 }
 
 .kanji {
   display: inline-block;
-  width: 100px;
+  width: 20%;
 }
 
 .meaning {
   display: inline-block;
-  width: 480px;
+  width: 50%;
 }
 
 .remove {
   display: inline-block;
-  width: 20px;
+  border: none;
+  background-color: #cccc1c1;
+  width: 10%;
+}
+
+.download {
+  border: none;
+  background: #cccc1c1;
+  padding: 5px;
 }

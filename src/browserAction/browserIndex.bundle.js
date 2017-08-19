@@ -60,31 +60,120 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
-/* 0 */,
-/* 1 */,
-/* 2 */
+/* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _Word = __webpack_require__(5);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.setWordsToStorage = exports.getWordsFromStorage = undefined;
+
+var _Word = __webpack_require__(1);
 
 var _Word2 = _interopRequireDefault(_Word);
 
-var _WordList = __webpack_require__(3);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * returns stored word list from storage.local
+ * @return Promise
+ */
+var getWordsFromStorage = exports.getWordsFromStorage = function getWordsFromStorage() {
+  return new Promise(function (resolve, reject) {
+    chrome.storage.local.get('words', function (_ref) {
+      var words = _ref.words;
+
+      if (!words) {
+        words = [];
+      }
+      resolve(words);
+    });
+  });
+};
+
+var setWordsToStorage = exports.setWordsToStorage = function setWordsToStorage(wordList) {
+  var payload = {
+    words: wordList.toStorage()
+  };
+  chrome.storage.local.set(payload, function () {
+    console.log('saved');
+  });
+};
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Word = function () {
+  function Word(furi, kanji, meaning) {
+    _classCallCheck(this, Word);
+
+    this.furi = furi;
+    this.kanji = kanji;
+    this.meaning = meaning;
+  }
+
+  _createClass(Word, [{
+    key: "wordToString",
+    value: function wordToString() {
+      return this.kanji + "\t\t\t\t" + this.kanji + "\t" + this.furi + "\t" + this.kanji + "\t" + this.furi + "\t\t" + this.meaning + "\t\t\n";
+    }
+  }, {
+    key: "toObject",
+    value: function toObject() {
+      return {
+        furi: this.furi,
+        kanji: this.kanji,
+        meaning: this.meaning
+      };
+    }
+  }]);
+
+  return Word;
+}();
+
+exports.default = Word;
+
+/***/ }),
+/* 2 */,
+/* 3 */,
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _Word = __webpack_require__(1);
+
+var _Word2 = _interopRequireDefault(_Word);
+
+var _WordList = __webpack_require__(5);
 
 var _WordList2 = _interopRequireDefault(_WordList);
 
-var _Display = __webpack_require__(4);
+var _Display = __webpack_require__(6);
 
 var _Display2 = _interopRequireDefault(_Display);
 
-var _storage = __webpack_require__(6);
+var _storage = __webpack_require__(0);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -138,7 +227,6 @@ function downloadListener() {
       return wordsToWords(words);
     }).then(function (words) {
       return words.reduce(function (a, b) {
-        //console.log(word.wordToString().split('\t'));
         return a + b.wordToString();
       }, '');
     }).then(function (longString) {
@@ -154,7 +242,7 @@ function downloadListener() {
 }
 
 /***/ }),
-/* 3 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -166,7 +254,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _storage = __webpack_require__(6);
+var _storage = __webpack_require__(0);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -216,7 +304,7 @@ var WordList = function () {
 exports.default = WordList;
 
 /***/ }),
-/* 4 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -228,7 +316,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _storage = __webpack_require__(6);
+var _storage = __webpack_require__(0);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -269,7 +357,7 @@ var Display = function () {
         // remove button
         var removeBtn = document.createElement('button');
         removeBtn.className = 'remove';
-        removeBtn.textContent = 'X';
+        removeBtn.textContent = 'Remove';
 
         removeBtn.addEventListener('click', function (e) {
           console.log('remember to remove this word when clicked');
@@ -306,95 +394,6 @@ var Display = function () {
 }();
 
 exports.default = Display;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Word = function () {
-  function Word(furi, kanji, meaning) {
-    _classCallCheck(this, Word);
-
-    this.furi = furi;
-    this.kanji = kanji;
-    this.meaning = meaning;
-  }
-
-  _createClass(Word, [{
-    key: "wordToString",
-    value: function wordToString() {
-      return this.kanji + "\t\t\t\t" + this.kanji + "\t" + this.furi + "\t" + this.kanji + "\t" + this.furi + "\t\t" + this.meaning + "\t\t\n";
-    }
-  }, {
-    key: "toObject",
-    value: function toObject() {
-      return {
-        furi: this.furi,
-        kanji: this.kanji,
-        meaning: this.meaning
-      };
-    }
-  }]);
-
-  return Word;
-}();
-
-exports.default = Word;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.setWordsToStorage = exports.getWordsFromStorage = undefined;
-
-var _Word = __webpack_require__(5);
-
-var _Word2 = _interopRequireDefault(_Word);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * returns stored word list from storage.local
- * @return Promise
- */
-var getWordsFromStorage = exports.getWordsFromStorage = function getWordsFromStorage() {
-  return new Promise(function (resolve, reject) {
-    chrome.storage.local.get('words', function (_ref) {
-      var words = _ref.words;
-
-      if (!words) {
-        words = [];
-      }
-      resolve(words);
-    });
-  });
-};
-
-var setWordsToStorage = exports.setWordsToStorage = function setWordsToStorage(wordList) {
-  var payload = {
-    words: wordList.toStorage()
-  };
-  chrome.storage.local.set(payload, function () {
-    console.log('saved');
-  });
-};
 
 /***/ })
 /******/ ]);

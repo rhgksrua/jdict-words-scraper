@@ -52,7 +52,6 @@ function downloadListener() {
     })
     .then(words => {
       return words.reduce((a, b) => {
-        //console.log(word.wordToString().split('\t'));
         return a + b.wordToString();
       }, '');
     })

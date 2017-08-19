@@ -30,7 +30,7 @@ class Display {
       // remove button
       const removeBtn = document.createElement('button');
       removeBtn.className = 'remove';
-      removeBtn.textContent = 'X';
+      removeBtn.textContent = 'Remove';
 
       removeBtn.addEventListener('click', e => {
         console.log('remember to remove this word when clicked');
