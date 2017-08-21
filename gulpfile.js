@@ -1,7 +1,9 @@
 var gulp = require('gulp');
 var webpack = require('webpack-stream');
 var webpackConfig = require('./webpack.build.config');
-//console.log(webpackConfig);
+var zip = require('gulp-zip');
+var runSequence = require('run-sequence');
+var clean = require('gulp-clean');
 
 var paths = {
 
@@ -49,4 +51,20 @@ gulp.task('icons', function() {
     .pipe(gulp.dest(paths.distIcons));
 })
 
-gulp.task('build', ['html', 'css', 'manifest', 'icons', 'js']);
+gulp.task('clean', function() {
+
+  return gulp.src('build/*', {read: false})
+    .pipe(clean());
+});
+
+gulp.task('copy', ['html', 'css', 'manifest', 'icons', 'js']);
+
+gulp.task('zip', function() {
+  return gulp.src('build/**')
+    .pipe(zip('dict.zip'))
+    .pipe(gulp.dest('build'))
+});
+
+gulp.task('build', function() {
+  runSequence('clean', 'copy', 'zip');
+});
