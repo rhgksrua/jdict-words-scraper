@@ -10,8 +10,6 @@ class Word {
     return `${this.kanji}\t\t\t\t${this.kanji}\t${this.furi}\t${this.kanji}\t${this.furi}\t\t${this.meaning}\t\t\n`;
   }
 
-
-
   toObject() {
     return {
       furi: this.furi,

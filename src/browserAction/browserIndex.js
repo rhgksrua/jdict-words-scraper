@@ -1,22 +1,21 @@
 // word
 import Word from './Word';
-
+import { polyfill } from 'es6-promise';
+polyfill();
+import fetch from 'isomorphic-fetch';
 // Word List
 import WordList from './WordList';
-
 // handles DOM manipulation
 import Display from './Display';
-
 // handles chrome storage.local
 // returns promise
 import { getWordsFromStorage } from './storage';
 
 const parent = document.querySelector('.word-list');
-
 const wordList = new WordList();
 const display = new Display(parent);
-
 const fetchWordList = getWordsFromStorage();
+
 fetchWordList
 .then(words => {
   const wordsArr = words.map(word => {
@@ -35,6 +34,11 @@ fetchWordList
   console.error(error);
 });
 
+/**
+ * Initializes Word
+ * @param  {object} words [object]
+ * @return {Word}         [new Word]
+ */
 function wordsToWords(words) {
   const wordsArr = words.map(word => {
     const { furi, kanji, meaning } = word;
@@ -43,6 +47,9 @@ function wordsToWords(words) {
   return wordsArr;
 }
 
+/**
+ * Attach download listner
+ */
 function downloadListener() {
   const download = document.querySelector('.download');
   download.addEventListener('click', () => {

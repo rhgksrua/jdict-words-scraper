@@ -4,17 +4,23 @@
     "babel-loader": "^7.1.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-env": "^1.6.0",
+    "gulp-clean": "^0.3.2",
+    "run-sequence": "^2.1.0",
     "webpack": "^3.5.4",
     "webpack-stream": "^4.0.0"
   },
   "scripts": {
-    "webpack": "webpack --progress --colors --watch",
+    "develop:watch": "webpack --progress --colors --watch",
+    "build": "gulp build",
     "test": "jasmine"
   },
   "dependencies": {
+    "es6-promise": "^4.1.1",
     "glob": "^7.1.2",
     "gulp": "^3.9.1",
     "gulp-cli": "^1.4.0",
+    "gulp-zip": "^4.0.0",
+    "isomorphic-fetch": "^2.2.1",
     "jasmine": "^2.7.0"
   }
 }
