@@ -64,7 +64,6 @@ class Extractor {
       return;
     }
 
-
     this.entryElements.forEach(el => {
       const addElement = document.createElement('span');
       addElement.innerHTML = '\u2795';

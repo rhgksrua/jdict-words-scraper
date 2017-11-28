@@ -28,7 +28,8 @@ fetchWordList
   wordList.setWordList(arr);
   display.render(wordList);
   downloadListener();
-
+  resetList();
+  console.log('hello world');
 })
 .catch(error => {
   console.error(error);
@@ -39,41 +40,58 @@ fetchWordList
  * @param  {object} words [object]
  * @return {Word}         [new Word]
  */
-function wordsToWords(words) {
+const wordsToWords = words => {
   const wordsArr = words.map(word => {
     const { furi, kanji, meaning } = word;
     return new Word(furi, kanji, meaning);
   });
   return wordsArr;
-}
+};
 
 /**
- * Attach download listner
+ * 
+ * @param {string} longString - csv text
+ */
+const initiateDownload = longString => {
+  const a = document.createElement('a');
+  const file = new Blob([longString], {type: 'text/plain'});
+  a.href = window.URL.createObjectURL(file);
+  a.download = 'wordList';
+  a.click();
+};
+
+const reduceArrayToString = wordsArr => {
+  return words.reduce((a, b) => {
+    return a + b.wordToString();
+  }, '');
+};
+
+/**
+ * Attach download listener
  */
 function downloadListener() {
   const download = document.querySelector('.download');
   download.addEventListener('click', () => {
     fetchWordList
-    .then(words => {
-      return wordsToWords(words)
-    })
-    .then(words => {
-      return words.reduce((a, b) => {
-        return a + b.wordToString();
-      }, '');
-    })
-    .then(longString => {
-      const a = document.createElement('a');
-      const file = new Blob([longString], {type: 'text/plain'});
-      a.href = window.URL.createObjectURL(file);
-      a.download = 'toAnki';
-      a.click();
-    })
+    .then(wordsToWords)
+    .then(initiateDownload)
     .catch(error => {
-      console.log(error);
-
+      console.error(error);
     });
-
   });
+}
 
+/**
+ * Resets words list
+ */
+function resetList() {
+  console.log('test');
+  const resetBtn = document.querySelector('.reset');
+  resetBtn.addEventListener('click', () => {
+    const wordList = document.querySelector('.word-list');
+    while (wordList.firstChild) {
+      wordList.removeChild(wordList.firstChild);
+    }
+    console.log('reset list');
+  });
 }

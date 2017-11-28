@@ -14,18 +14,18 @@ class Display {
     const frag = document.createDocumentFragment();
 
     wordList.getWordList().forEach((word, index) => {
-      const wordElement = document.createElement('p');
-      wordElement.className = 'word';
+      const wordElement = document.createElement('div');
+      wordElement.className = 'columns is-mobile word';
       wordElement.dataset.index = index;
       key.forEach(key => {
-        const span = document.createElement('span');
-        span.className = key;
-        span.textContent = word[key];
-        wordElement.appendChild(span);
+        const div = document.createElement('div');
+        div.className = 'column ' + key;
+        div.textContent = word[key];
+        wordElement.appendChild(div);
       })
       // remove button
       const removeBtn = document.createElement('button');
-      removeBtn.className = 'remove';
+      removeBtn.className = 'button is-danger remove';
       removeBtn.textContent = 'Remove';
       removeBtn.addEventListener('click', e => {
         console.log('remember to remove this word when clicked');
@@ -36,7 +36,10 @@ class Display {
         this.render(wordList);
       });
       wordElement.appendChild(removeBtn);
-      frag.appendChild(wordElement);
+      const wordContainer = document.createElement('div');
+      wordContainer.className = 'container';
+      wordContainer.appendChild(wordElement);
+      frag.appendChild(wordContainer);
     });
     this.parent.appendChild(frag);
   }
