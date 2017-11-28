@@ -3,6 +3,7 @@ var webpack = require('webpack-stream');
 var webpackConfig = require('./webpack.build.config');
 var zip = require('gulp-zip');
 var runSequence = require('run-sequence');
+var clean = require('gulp-clean');
 
 var paths = {
 
@@ -52,7 +53,7 @@ gulp.task('icons', function() {
 
 gulp.task('clean', function() {
 
-  return gulp.src('build/', {read: false})
+  return gulp.src('build/*', {read: false})
     .pipe(clean());
 });
 
@@ -65,5 +66,5 @@ gulp.task('zip', function() {
 });
 
 gulp.task('build', function() {
-  runSequence('copy', 'zip');
+  runSequence('clean', 'copy', 'zip');
 });
