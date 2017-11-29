@@ -1,47 +1,60 @@
 import { setWordsToStorage } from './storage';
-// handles rendering of wordlist
-
 
 class Display {
-  constructor(parent) {
+  constructor(parent, wordList) {
     this.parent = parent;
+    this.wordList = wordList;
+    this._attachRemoveDelegate(wordList);
   }
-  render(wordList) {
-    console.log('render');
-    this._clearAllChildren();
-    // create and attach new element to list
-    const key = ['furi', 'kanji', 'meaning'];
-    const frag = document.createDocumentFragment();
-
-    wordList.getWordList().forEach((word, index) => {
-      const wordElement = document.createElement('div');
-      wordElement.className = 'columns is-mobile word';
-      wordElement.dataset.index = index;
-      key.forEach(key => {
-        const div = document.createElement('div');
-        div.className = 'column ' + key;
-        div.textContent = word[key];
-        wordElement.appendChild(div);
-      })
-      // remove button
-      const removeBtn = document.createElement('button');
-      removeBtn.className = 'button is-danger remove';
-      removeBtn.textContent = 'Remove';
-      removeBtn.addEventListener('click', e => {
-        console.log('remember to remove this word when clicked');
-        console.log(e);
-        const index = e.target.parentElement.dataset.index;
+  _attachRemoveDelegate(wordList) {
+    this.parent.addEventListener('click', e => {
+      if (e.target && e.target.nodeName === 'BUTTON') {
+        const index = e.target.parentElement.parentElement.dataset.index;
         wordList.removeWord(index);
         setWordsToStorage(wordList);
         this.render(wordList);
-      });
-      wordElement.appendChild(removeBtn);
-      const wordContainer = document.createElement('div');
-      wordContainer.className = 'container';
-      wordContainer.appendChild(wordElement);
-      frag.appendChild(wordContainer);
+      }
     });
-    this.parent.appendChild(frag);
+  }
+  _createInnerHTML(arrWordList) {
+    const keys = ['furi', 'kanji', 'meaning'];
+
+    let finalHTML = '';
+    let containerHTML = '';
+
+    arrWordList.forEach((word, index) => {
+      let wordListHTML = '';
+      keys.forEach(key => {
+        wordListHTML += `
+          <div class="column ${key}">
+            <p>
+              ${word[key]}
+            </p>
+          </div>
+        `;
+      });
+      containerHTML += `
+        <div data-index="${index}" class="columns is-mobile word">
+          ${wordListHTML}
+          <div class="column">
+            <button class="button is-danger">REMOVE</button>
+          </div>
+        </div>
+      `;
+    });
+
+    finalHTML = `
+      <div class="container">
+        ${containerHTML}
+      </div>
+    `;
+
+    return finalHTML;
+  }
+  render(wordList) {
+    this._clearAllChildren();
+    const listHTML = this._createInnerHTML(wordList.getWordList());
+    this.parent.innerHTML = listHTML;
   }
   /**
    * Clears all children in the parent element

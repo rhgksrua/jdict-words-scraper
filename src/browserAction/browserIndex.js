@@ -13,7 +13,7 @@ import { getWordsFromStorage } from './storage';
 
 const parent = document.querySelector('.word-list');
 const wordList = new WordList();
-const display = new Display(parent);
+const display = new Display(parent, wordList);
 const fetchWordList = getWordsFromStorage();
 
 fetchWordList
@@ -29,7 +29,6 @@ fetchWordList
   display.render(wordList);
   downloadListener();
   resetList();
-  console.log('hello world');
 })
 .catch(error => {
   console.error(error);
@@ -60,8 +59,8 @@ const initiateDownload = longString => {
   a.click();
 };
 
-const reduceArrayToString = wordsArr => {
-  return words.reduce((a, b) => {
+const reduceArrayToString = arrWords => {
+  return arrWords.reduce((a, b) => {
     return a + b.wordToString();
   }, '');
 };
@@ -74,6 +73,7 @@ function downloadListener() {
   download.addEventListener('click', () => {
     fetchWordList
     .then(wordsToWords)
+    .then(reduceArrayToString)
     .then(initiateDownload)
     .catch(error => {
       console.error(error);
@@ -85,13 +85,11 @@ function downloadListener() {
  * Resets words list
  */
 function resetList() {
-  console.log('test');
   const resetBtn = document.querySelector('.reset');
   resetBtn.addEventListener('click', () => {
     const wordList = document.querySelector('.word-list');
     while (wordList.firstChild) {
       wordList.removeChild(wordList.firstChild);
     }
-    console.log('reset list');
   });
 }
