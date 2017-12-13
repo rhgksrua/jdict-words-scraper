@@ -9,7 +9,7 @@ import WordList from './WordList';
 import Display from './Display';
 // handles chrome storage.local
 // returns promise
-import { getWordsFromStorage } from './storage';
+import { getWordsFromStorage, resetStorage } from './storage';
 
 const parent = document.querySelector('.word-list');
 const wordList = new WordList();
@@ -91,5 +91,6 @@ function resetList() {
     while (wordList.firstChild) {
       wordList.removeChild(wordList.firstChild);
     }
+    resetStorage();
   });
 }

@@ -22,3 +22,9 @@ export const setWordsToStorage = wordList => {
     console.log('saved');
   });
 }
+
+export const resetStorage = () => {
+  chrome.storage.local.remove("words", () => {
+    console.log('reset');
+  });
+}
