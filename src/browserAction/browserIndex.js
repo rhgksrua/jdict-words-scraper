@@ -52,11 +52,14 @@ const wordsToWords = words => {
  * @param {string} longString - csv text
  */
 const initiateDownload = longString => {
+  console.log('hello world');
   const a = document.createElement('a');
   const file = new Blob([longString], {type: 'text/plain'});
-  a.href = window.URL.createObjectURL(file);
-  a.download = 'wordList';
-  a.click();
+  const url = window.URL.createObjectURL(file);
+ chrome.downloads.download({
+   url,
+   filename: "jlptWordList.txt"
+ });
 };
 
 const reduceArrayToString = arrWords => {

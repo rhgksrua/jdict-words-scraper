@@ -16,7 +16,8 @@
   },
   "permissions": [
     "http://jpdic.naver.com/*",
-    "storage"
+    "storage",
+    "downloads"
   ],
   "content_scripts": [
     {
